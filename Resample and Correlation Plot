@@ -1,0 +1,28 @@
+setwd("C:/File Path") # Insert file path
+install.packages("raster") 
+library(raster)
+
+#Read the raster files in the folder
+Eg: 
+Aspect <- raster("Aspect.tif") # Mention the file format accordingly
+
+#Resample the data based on a particular data for all the varibales present.
+Eg:
+Aspect <- resample(Aspect, DEM, method = "bilinear") # Resampling the data based on DEM
+
+# Stack the variables
+vars <- stack()
+plot(vars) # Plots all the varibales
+
+###Checking variable correlation
+plot(vars)
+par(mfrow=c(1,1))
+library(corrplot)
+cor<- cor(sampleRandom(vars, size= ncell(DEM) * 0.05 ), method = "pearson")
+jpeg("Correlationplot.jpeg", width = 10, height = 10, units = 'in', res = 600)
+corrplot(cor_matrix, method = "number")
+plot(vars) # Correlation matri gets plotted
+dev.off()
+
+#Export Data
+writeRaster(Aspect," File Path:, Output file name:, Format:")
